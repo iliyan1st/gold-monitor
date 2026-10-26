@@ -1,6 +1,6 @@
 import { sofiaClock } from './clock.js';
 import { summaryText, updateText } from './format.js';
-import { marketDay } from './market.js';
+import { fetchMarket } from './market.js';
 import { modeFor, slotFor, slotKey, type Mode } from './schedule.js';
 import { takeSnapshot } from './snapshot.js';
 import { loadState, saveState } from './state.js';
@@ -18,17 +18,17 @@ async function main() {
   console.log(`Sofia ${clock.date} ${clock.hour}:${String(clock.minute).padStart(2, '0')} (${clock.weekday}) → ${mode}`);
   if (mode === 'none') return;
 
-  const snap = await takeSnapshot(now);
+  const [snap, market] = await Promise.all([takeSnapshot(now), fetchMarket(now)]);
   if (!Object.keys(snap.spot).length && !Object.keys(snap.products).length) {
     throw new Error(`every source failed: ${snap.errors.join(', ')}`);
   }
   const dayOpen = state.dayOpen?.date === snap.date ? state.dayOpen : undefined;
 
   if (mode === 'update') {
-    await send(updateText(snap, state.last, dayOpen));
+    await send(updateText(snap, market, state.last));
     state.lastSlot = slotKey(clock.date, slotFor(clock) ?? clock.hour);
   } else {
-    await send(summaryText(snap, await marketDay(now), dayOpen ?? state.last));
+    await send(summaryText(snap, market, state.last, dayOpen ?? state.last));
     state.summarySentOn = clock.date;
   }
   state.dayOpen = dayOpen ?? snap;

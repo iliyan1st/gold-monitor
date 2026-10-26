@@ -65,8 +65,8 @@ describe('Tavex chart (gold, 24 h of 5-minute candles)', () => {
     expect(dayStats([])).toBeUndefined();
   });
 
-  it('close at a moment = last candle started before it', () => {
-    expect(closeAt(candles, new Date('2026-10-25T22:12:00Z'))).toBe(3562.95);
+  it('close at a moment = last candle that ended before it', () => {
+    expect(closeAt(candles, new Date('2026-10-25T22:12:00Z'))).toBe(3565.1);
     expect(closeAt(candles, new Date('2026-10-01T00:00:00Z'))).toBeUndefined();
   });
 });

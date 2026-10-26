@@ -32,6 +32,7 @@ export interface Candle {
   low: number;
   close: number;
   start: string; // ISO time
+  end: string; // ISO time
 }
 
 export const GRAMS_PER_OZ = 31.1034768;

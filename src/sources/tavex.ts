@@ -10,7 +10,7 @@ interface SpotResponse {
 }
 
 interface ChartResponse {
-  data: { open: number; close: number; high: number; low: number; startDateTime: string }[];
+  data: { open: number; close: number; high: number; low: number; startDateTime: string; endDateTime: string }[];
 }
 
 export async function tavexSpot(metal: Metal): Promise<number> {
@@ -19,8 +19,8 @@ export async function tavexSpot(metal: Metal): Promise<number> {
   return res.data.mid;
 }
 
-/** Interval codes the Tavex chart itself uses: PT5M for 24 h, PT6H for a month. Others return HTML. */
-export type ChartInterval = 'PT5M' | 'PT1H' | 'PT6H';
+/** Interval codes the Tavex chart itself uses: PT5M for 24 h, PT6H for a month, P1D for a year. Others return HTML. */
+export type ChartInterval = 'PT5M' | 'PT1H' | 'PT6H' | 'P1D';
 
 export async function tavexCandles(metal: Metal, from: Date, to: Date, interval: ChartInterval): Promise<Candle[]> {
   const iso = (d: Date) => d.toISOString().split('.')[0] + 'Z';
@@ -38,6 +38,7 @@ export function parseCandles(res: ChartResponse): Candle[] {
     low: c.low,
     close: c.close,
     start: c.startDateTime,
+    end: c.endDateTime,
   }));
 }
 

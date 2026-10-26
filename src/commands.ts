@@ -1,5 +1,6 @@
 import { updateText } from './format.js';
 import { fetchJson } from './http.js';
+import { fetchMarket } from './market.js';
 import { takeSnapshot } from './snapshot.js';
 import type { State } from './state.js';
 import { configuredChats, isMember, sendMessage } from './telegram.js';
@@ -50,13 +51,14 @@ export async function handleUpdate(update: Update): Promise<void> {
     return;
   }
 
-  const [snap, state] = await Promise.all([
-    takeSnapshot(),
+  const now = new Date();
+  const [snap, market, state] = await Promise.all([
+    takeSnapshot(now),
+    fetchMarket(now),
     fetchJson<State>(STATE_URL).catch((err) => {
       console.error('state:', err instanceof Error ? err.message : err);
       return {} as State;
     }),
   ]);
-  const dayOpen = state.dayOpen?.date === snap.date ? state.dayOpen : undefined;
-  await sendMessage(msg.chat.id, updateText(snap, state.last, dayOpen));
+  await sendMessage(msg.chat.id, updateText(snap, market, state.last));
 }
