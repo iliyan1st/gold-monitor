@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { sofiaClock } from '../src/clock.js';
-import { command } from '../src/commands.js';
+import { command, who } from '../src/commands.js';
+import { chatIdFromPathname } from '../src/subscribers.js';
 import { signedPct, summaryText, updateText } from '../src/format.js';
 import type { Market } from '../src/market.js';
 import { modeFor } from '../src/schedule.js';
@@ -141,6 +142,20 @@ describe('modeFor', () => {
 
   it('weekends: nothing during the day', () => {
     expect(modeFor(at('2026-10-24T08:00:00Z'), {})).toBe('none');
+  });
+});
+
+describe('subscribers', () => {
+  it('chat id from the blob name', () => {
+    expect(chatIdFromPathname('subscribers/1107076415.json')).toBe(1107076415);
+    expect(chatIdFromPathname('subscribers/-1001234567890.json')).toBe(-1001234567890);
+    expect(chatIdFromPathname('other/1.json')).toBeUndefined();
+  });
+
+  it('who: person with username, or the group title', () => {
+    expect(who({ chat: { id: 5, type: 'private' }, from: { id: 5, first_name: 'Иван', username: 'ivan' } })).toBe('Иван @ivan');
+    expect(who({ chat: { id: -9, type: 'group', title: 'Злато' }, from: { id: 5, first_name: 'Иван' } })).toBe('Злато');
+    expect(who({ chat: { id: 7, type: 'private' } })).toBe('7');
   });
 });
 

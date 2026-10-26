@@ -6,7 +6,7 @@ import { GRAMS_PER_OZ, METALS, type Metal, type Snapshot } from './types.js';
 export const METAL_NAMES: Record<Metal, string> = { XAU: 'Злато', XAG: 'Сребро', XPT: 'Платина' };
 
 const NUM = new Intl.NumberFormat('bg-BG', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+export const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 /** "3588,65", "14 167,00", "—" for a price the site doesn't show. */
 export const eur = (n: number | null | undefined) => (n == null ? '—' : NUM.format(n));

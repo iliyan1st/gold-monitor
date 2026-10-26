@@ -1,14 +1,15 @@
-import { updateText } from './format.js';
+import { esc, updateText } from './format.js';
 import { fetchJson } from './http.js';
 import { fetchMarket } from './market.js';
 import { takeSnapshot } from './snapshot.js';
 import type { State } from './state.js';
-import { configuredChats, isMember, sendMessage } from './telegram.js';
+import { addSubscriber, listSubscribers, MAX_SUBSCRIBERS, removeSubscriber } from './subscribers.js';
+import { configuredChats, sendMessage } from './telegram.js';
 
 interface Message {
   text?: string;
   chat: { id: number; type: string; title?: string };
-  from?: { id: number; first_name?: string };
+  from?: { id: number; first_name?: string; username?: string };
 }
 
 export interface Update {
@@ -21,36 +22,56 @@ export interface Update {
  */
 const STATE_URL = 'https://raw.githubusercontent.com/iliyan1st/gold-monitor/main/data/state.json';
 
+const HELP = '/gold — цените сега\n/stop — спирам съобщенията';
+const WELCOME =
+  '✅ Готово! Ще получаваш цените на златото, среброто и платината в 10:00, 14:00 и 18:00 ' +
+  `(пон–пет) и обобщение в 22:00 всеки ден.\n${HELP}`;
+
 /** "/gold", "/gold@GoldBulgariaMonitorBot", "/Gold сега" → "gold"; anything else → undefined. */
 export function command(text: string | undefined): string | undefined {
   return text?.match(/^\/([a-z]+)(?:@\w+)?(?:\s|$)/i)?.[1].toLowerCase();
 }
 
-/** The group(s) the bot posts to, and their members in a private chat with the bot. */
-async function allowed(msg: Message): Promise<boolean> {
-  const chats = configuredChats();
-  if (chats.includes(String(msg.chat.id))) return true;
-  if (msg.chat.type !== 'private' || !msg.from) return false;
-  for (const chat of chats) if (await isMember(chat, msg.from.id)) return true;
-  return false;
+/** "Иван @ivan", or the group's title. */
+export function who(msg: Message): string {
+  const person = [msg.from?.first_name, msg.from?.username && `@${msg.from.username}`].filter(Boolean).join(' ');
+  return msg.chat.title ?? (person || String(msg.chat.id));
 }
 
-export async function handleUpdate(update: Update): Promise<void> {
-  const msg = update.message;
-  const cmd = command(msg?.text);
-  if (!msg || !cmd) return;
+/** Tells the owner who joined or left — the only control over an open bot. */
+async function notifyOwner(text: string, except: number): Promise<void> {
+  for (const chat of configuredChats().filter((c) => c !== String(except))) {
+    await sendMessage(chat, text).catch((err) => console.error('owner notice:', err instanceof Error ? err.message : err));
+  }
+}
 
-  if (cmd === 'start' || cmd === 'id') {
-    await sendMessage(msg.chat.id, `Цените сега: /gold\nНомер на този чат: <code>${msg.chat.id}</code>`);
+async function start(msg: Message): Promise<void> {
+  const chatId = msg.chat.id;
+  const subscribers = await listSubscribers();
+  if (!subscribers.includes(chatId) && !configuredChats().includes(String(chatId))) {
+    if (subscribers.length >= MAX_SUBSCRIBERS) {
+      await sendMessage(chatId, 'Ботът е пълен. Помоли човека, който го поддържа, да те добави.');
+      return;
+    }
+    await addSubscriber(chatId, who(msg));
+    await notifyOwner(`➕ Нов абонат: ${esc(who(msg))}`, chatId);
+  }
+  await sendMessage(chatId, WELCOME);
+  await gold(msg);
+}
+
+async function stop(msg: Message): Promise<void> {
+  const chatId = msg.chat.id;
+  if (configuredChats().includes(String(chatId))) {
+    await sendMessage(chatId, 'Този чат е зададен в настройките на бота (TELEGRAM_CHAT_ID) — махни го оттам.');
     return;
   }
-  if (cmd !== 'gold') return;
-  if (!(await allowed(msg))) {
-    console.log(`/gold from a chat that isn't set up: ${msg.chat.id} (${msg.chat.title ?? msg.from?.first_name ?? '?'})`);
-    await sendMessage(msg.chat.id, 'Този бот е за една група. Помоли човека, който го поддържа, да те добави.');
-    return;
-  }
+  await removeSubscriber(chatId);
+  await sendMessage(chatId, 'Спрях съобщенията. /start — за да ги пуснеш пак.');
+  await notifyOwner(`➖ Спря абонамента: ${esc(who(msg))}`, chatId);
+}
 
+async function gold(msg: Message): Promise<void> {
   const now = new Date();
   const [snap, market, state] = await Promise.all([
     takeSnapshot(now),
@@ -61,4 +82,15 @@ export async function handleUpdate(update: Update): Promise<void> {
     }),
   ]);
   await sendMessage(msg.chat.id, updateText(snap, market, state.last));
+}
+
+export async function handleUpdate(update: Update): Promise<void> {
+  const msg = update.message;
+  const cmd = command(msg?.text);
+  if (!msg || !cmd) return;
+  if (cmd === 'start') await start(msg);
+  else if (cmd === 'stop') await stop(msg);
+  else if (cmd === 'gold') await gold(msg);
+  else if (cmd === 'id') await sendMessage(msg.chat.id, `Номер на този чат: <code>${msg.chat.id}</code>`);
+  else if (cmd === 'help') await sendMessage(msg.chat.id, HELP);
 }

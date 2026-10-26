@@ -4,7 +4,8 @@ import { fetchMarket } from './market.js';
 import { modeFor, slotFor, slotKey, type Mode } from './schedule.js';
 import { takeSnapshot } from './snapshot.js';
 import { loadState, saveState } from './state.js';
-import { send } from './telegram.js';
+import { listSubscribers, removeSubscriber } from './subscribers.js';
+import { broadcast, configuredChats } from './telegram.js';
 
 /** MODE=update|summary forces a message (manual runs); DRY_RUN=1 prints it and saves nothing. */
 const forced = process.env.MODE === 'update' || process.env.MODE === 'summary' ? (process.env.MODE as Mode) : undefined;
@@ -24,13 +25,15 @@ async function main() {
   }
   const dayOpen = state.dayOpen?.date === snap.date ? state.dayOpen : undefined;
 
-  if (mode === 'update') {
-    await send(updateText(snap, market, state.last));
-    state.lastSlot = slotKey(clock.date, slotFor(clock) ?? clock.hour);
-  } else {
-    await send(summaryText(snap, market, state.last, dayOpen ?? state.last));
-    state.summarySentOn = clock.date;
-  }
+  const owners = configuredChats();
+  const chats = [...new Set([...owners, ...(await listSubscribers()).map(String)])];
+  const text = mode === 'update' ? updateText(snap, market, state.last) : summaryText(snap, market, state.last, dayOpen ?? state.last);
+  const { blocked } = await broadcast(chats, text);
+  // Someone who blocked the bot has left for good; drop them so every run doesn't fail on them.
+  for (const chat of blocked.filter((c) => !owners.includes(c))) await removeSubscriber(Number(chat));
+
+  if (mode === 'update') state.lastSlot = slotKey(clock.date, slotFor(clock) ?? clock.hour);
+  else state.summarySentOn = clock.date;
   state.dayOpen = dayOpen ?? snap;
   state.last = snap;
   if (!dryRun) saveState(state);

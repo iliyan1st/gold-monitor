@@ -46,6 +46,8 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Vercel Blob store with the people who pressed Start (src/subscribers.ts).
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
           MODE: ${{ inputs.mode != 'auto' && inputs.mode || '' }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
       - name: Save state
