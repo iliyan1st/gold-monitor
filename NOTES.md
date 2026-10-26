@@ -5,7 +5,9 @@ Goal: gold/silver/platinum prices in € to a Telegram group of 2–3 people who
 
 ## How it works
 - Scheduled (GitHub Actions, `src/run.ts`): updates at 10:00, 14:00, 18:00 Mon–Fri; summary at 22:00 every day (weekends: summary only). `src/schedule.ts` decides by Sofia time; a second trigger for the same slot sends nothing.
-- On demand (Vercel, `api/telegram.ts` → `src/commands.ts`): `/gold` in the group, or privately by a group member, answers within seconds. `/start` / `/id` reply with the chat id. Other chats get "this bot is for one group".
+- On demand (Vercel, `api/telegram.ts` → `src/commands.ts`): `/gold` prices now; `/chart` (month), `/chart_7d`, `/chart_6m`, `/chart_1y` (or `/chart 6м`); `/stop`; `/id`.
+- Open subscription (user's ask: "без номер, пише start и започва"): Start → subscribed, welcome + prices; `/stop` → removed. Subscribers = one private blob per chat in Vercel Blob store `gold-monitor-subscribers` (`src/subscribers.ts`), shared by Vercel (writes) and Actions (`BLOB_READ_WRITE_TOKEN` secret, reads). The owner (`TELEGRAM_CHAT_ID`) gets "➕/➖" notices; max 20 chats; chats that block the bot (403) are dropped.
+- Chart (`src/chart.ts`): the three metals as % change from the period start, Tavex candles, rendered by quickchart.io (free, no key). Free tier refuses >~300 points per line → thinned to 200. The month chart follows the 22:00 summary.
 - Update message: a 35-char monospace table (fits a phone) — spot €/oz, €/г, % since the previous message, day, week, month, 6 months, year (user's ask 2026-10-26); then dealer sell/buy with the change since the previous message.
 - Summary: same table + day min/max; dealer changes since the morning.
 - History (`src/market.ts`): Tavex charts — PT5M since Sofia midnight (day), PT6H (week, ±6 h), P1D for a year (month/6m/year, ±1 day). Daily candles run 15:00→15:00 UTC.
@@ -32,6 +34,6 @@ Goal: gold/silver/platinum prices in € to a Telegram group of 2–3 people who
 - [x] Sources + messages, 37 tests, live dry run on GitHub 2026-10-26
 - [x] Vercel function deployed; rejects calls without the secret (403)
 - [x] 2026-10-26 22:38: live. No group — `TELEGRAM_CHAT_ID` = 1107076415 (the user's private chat). Webhook + /gold command set; /gold tested end to end; first scheduled update sent from Actions.
-- [ ] The other 1–2 people: they press Start → add their chat ids (comma-separated) to the GitHub secret AND the Vercel env, redeploy.
+- [x] Open subscription via Start (Blob store), tested live: add/list/remove locally, /stop and /chart on Vercel.
 - [ ] GitHub `schedule:` hasn't fired yet for this repo (imoti-monitor's never did) — check the 10:10 run on 2026-10-27.
 - [ ] cron-job.org job (needs the GitHub token)
