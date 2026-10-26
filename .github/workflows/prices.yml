@@ -1,0 +1,56 @@
+name: prices
+
+# Triggered every hour by cron-job.org (workflow_dispatch API), with GitHub's own schedule as a
+# backup. A second trigger in the same hour sends nothing (src/schedule.ts), so both can run.
+# Public repo → Actions minutes are free (imoti-monitor already uses most of the private quota).
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: auto = decide by Sofia time; hourly / summary = send that message now
+        type: choice
+        options: [auto, hourly, summary]
+        default: auto
+      dry_run:
+        description: Print the message in the log instead of sending; don't save state
+        type: boolean
+        default: false
+  schedule:
+    # :10 past every hour 05–20 UTC = 07–22 Sofia in winter, 08–23 in summer.
+    - cron: '10 5-20 * * *'
+
+# Never run two at once — they'd race on data/state.json.
+concurrency:
+  group: prices
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The branch tip when the job starts, not when it was queued: a queued run must see the
+          # state the previous run just pushed, or it would send the same hour again.
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm start
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          MODE: ${{ inputs.mode != 'auto' && inputs.mode || '' }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+      - name: Save state
+        run: |
+          git config user.name "gold-monitor"
+          git config user.email "gold-monitor@users.noreply.github.com"
+          git add data/state.json
+          git diff --cached --quiet || (git commit -m "chore: update prices state" && git pull --rebase && git push)

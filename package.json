@@ -1,0 +1,29 @@
+{
+  "name": "gold-monitor",
+  "version": "1.0.0",
+  "description": "Hourly gold/silver/platinum prices (Tavex, TopGold) to Telegram",
+  "scripts": {
+    "test": "vitest run",
+    "start": "tsx src/run.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iliyan1st/gold-monitor.git"
+  },
+  "license": "ISC",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "cheerio": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
