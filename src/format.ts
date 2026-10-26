@@ -29,10 +29,8 @@ function delta(from: number | null | undefined, to: number | null): string {
   return ` (${d > 0 ? '🔺 +' : '🔻 −'}${NUM.format(Math.abs(d))})`;
 }
 
-/** "за час" when `ref` is about an hour old, otherwise "от 08:00" / "от 24.10 22:00". */
+/** "от 10:00" (same day) or "от 24.10 22:00". */
 export function sinceLabel(ref: Snapshot, now: Snapshot): string {
-  const minutes = (Date.parse(now.at) - Date.parse(ref.at)) / 60_000;
-  if (minutes <= 90) return 'за час';
   return ref.date === now.date ? `от ${sofiaTime(ref.at)}` : `от ${sofiaDay(ref.at)} ${sofiaTime(ref.at)}`;
 }
 
@@ -72,7 +70,7 @@ function references(snap: Snapshot, candidates: (Snapshot | undefined)[]): Snaps
   return candidates.filter((r): r is Snapshot => !!r && !seen.has(r.at) && !!seen.add(r.at));
 }
 
-export function hourlyText(snap: Snapshot, last: Snapshot | undefined, dayOpen: Snapshot | undefined): string {
+export function updateText(snap: Snapshot, last: Snapshot | undefined, dayOpen: Snapshot | undefined): string {
   const refs = references(snap, [last, dayOpen?.date === snap.date ? dayOpen : undefined]);
   const spot = METALS.flatMap((m) => {
     const now = snap.spot[m];
@@ -90,7 +88,7 @@ export function hourlyText(snap: Snapshot, last: Snapshot | undefined, dayOpen: 
   ].join('\n');
 }
 
-/** `ref` = the morning's first prices (or the last ones sent, on days without hourly messages). */
+/** `ref` = the morning's first prices (or the last ones sent, on weekends). */
 export function summaryText(snap: Snapshot, market: MarketDay, ref: Snapshot | undefined): string {
   const lines = [`📊 <b>Обобщение · ${sofiaWeekday(snap.at)}, ${sofiaDay(snap.at)}</b>`];
   if (METALS.every((m) => !market.day[m]) && !market.errors.length) lines.push('Борсата не е работила днес.');

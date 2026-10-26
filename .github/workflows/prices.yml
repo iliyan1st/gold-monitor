@@ -1,23 +1,23 @@
 name: prices
 
-# Triggered every hour by cron-job.org (workflow_dispatch API), with GitHub's own schedule as a
-# backup. A second trigger in the same hour sends nothing (src/schedule.ts), so both can run.
+# Triggered at 10/14/18/22 Sofia time by cron-job.org (workflow_dispatch API), with GitHub's own
+# schedule as a backup. A second trigger for the same slot sends nothing (src/schedule.ts).
 # Public repo → Actions minutes are free (imoti-monitor already uses most of the private quota).
 on:
   workflow_dispatch:
     inputs:
       mode:
-        description: auto = decide by Sofia time; hourly / summary = send that message now
+        description: auto = decide by Sofia time; update / summary = send that message now
         type: choice
-        options: [auto, hourly, summary]
+        options: [auto, update, summary]
         default: auto
       dry_run:
         description: Print the message in the log instead of sending; don't save state
         type: boolean
         default: false
   schedule:
-    # :10 past every hour 05–20 UTC = 07–22 Sofia in winter, 08–23 in summer.
-    - cron: '10 5-20 * * *'
+    # 08/12/16/20:10 UTC = 10/14/18/22:10 Sofia in winter, an hour later in summer (still in the slot).
+    - cron: '10 8,12,16,20 * * *'
 
 # Never run two at once — they'd race on data/state.json.
 concurrency:

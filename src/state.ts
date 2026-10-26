@@ -4,12 +4,12 @@ import type { Snapshot } from './types.js';
 
 /** Persisted between runs (committed back to the repo by the workflow). */
 export interface State {
-  /** Previous run's prices → the "за час" change. */
+  /** Prices of the previous message → the "от 14:00" change. */
   last?: Snapshot;
-  /** First prices of the Sofia day → the "от сутринта" change. */
+  /** First prices of the Sofia day → the change since the morning. */
   dayOpen?: Snapshot;
-  /** 'YYYY-MM-DD HH' of the last hourly message, so a second trigger in the same hour sends nothing. */
-  lastHourly?: string;
+  /** 'YYYY-MM-DD HH' of the last slot sent, so a second trigger for the same slot sends nothing. */
+  lastSlot?: string;
   /** Day (YYYY-MM-DD) the evening summary was sent. */
   summarySentOn?: string;
 }
