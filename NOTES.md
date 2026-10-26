@@ -6,8 +6,9 @@ Goal: gold/silver/platinum prices in € to a Telegram group of 2–3 people who
 ## How it works
 - Scheduled (GitHub Actions, `src/run.ts`): updates at 10:00, 14:00, 18:00 Mon–Fri; summary at 22:00 every day (weekends: summary only). `src/schedule.ts` decides by Sofia time; a second trigger for the same slot sends nothing.
 - On demand (Vercel, `api/telegram.ts` → `src/commands.ts`): `/gold` in the group, or privately by a group member, answers within seconds. `/start` / `/id` reply with the chat id. Other chats get "this bot is for one group".
-- Update message: spot €/oz + €/g with the change since the previous message and since the morning; dealer sell/buy with the change since the previous message.
-- Summary: day open→now %, day min/max, week % (Tavex charts), dealer changes since the morning.
+- Update message: a 35-char monospace table (fits a phone) — spot €/oz, €/г, % since the previous message, day, week, month, 6 months, year (user's ask 2026-10-26); then dealer sell/buy with the change since the previous message.
+- Summary: same table + day min/max; dealer changes since the morning.
+- History (`src/market.ts`): Tavex charts — PT5M since Sofia midnight (day), PT6H (week, ±6 h), P1D for a year (month/6m/year, ±1 day). Daily candles run 15:00→15:00 UTC.
 - `/gold` reads the scheduled runs' state from raw.githubusercontent.com (public repo, ≤5 min cache) for the "от 14:00" changes; it never writes state.
 - `src/products.ts` — the watched products.
 - `MODE=update DRY_RUN=1 npm start` — print a message with live prices, send nothing, save nothing.
@@ -30,5 +31,7 @@ Goal: gold/silver/platinum prices in € to a Telegram group of 2–3 people who
 ## Status
 - [x] Sources + messages, 37 tests, live dry run on GitHub 2026-10-26
 - [x] Vercel function deployed; rejects calls without the secret (403)
-- [ ] Telegram group → `TELEGRAM_CHAT_ID` (GitHub secret + Vercel env + redeploy), then setWebhook + setMyCommands, enable the `prices` workflow (disabled until then)
+- [x] 2026-10-26 22:38: live. No group — `TELEGRAM_CHAT_ID` = 1107076415 (the user's private chat). Webhook + /gold command set; /gold tested end to end; first scheduled update sent from Actions.
+- [ ] The other 1–2 people: they press Start → add their chat ids (comma-separated) to the GitHub secret AND the Vercel env, redeploy.
+- [ ] GitHub `schedule:` hasn't fired yet for this repo (imoti-monitor's never did) — check the 10:10 run on 2026-10-27.
 - [ ] cron-job.org job (needs the GitHub token)
