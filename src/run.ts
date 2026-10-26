@@ -1,3 +1,4 @@
+import { buildChart } from './chart.js';
 import { sofiaClock } from './clock.js';
 import { summaryText, updateText } from './format.js';
 import { fetchMarket } from './market.js';
@@ -5,7 +6,7 @@ import { modeFor, slotFor, slotKey, type Mode } from './schedule.js';
 import { takeSnapshot } from './snapshot.js';
 import { loadState, saveState } from './state.js';
 import { listSubscribers, removeSubscriber } from './subscribers.js';
-import { broadcast, configuredChats } from './telegram.js';
+import { broadcast, broadcastPhoto, configuredChats } from './telegram.js';
 
 /** MODE=update|summary forces a message (manual runs); DRY_RUN=1 prints it and saves nothing. */
 const forced = process.env.MODE === 'update' || process.env.MODE === 'summary' ? (process.env.MODE as Mode) : undefined;
@@ -31,6 +32,12 @@ async function main() {
   const { blocked } = await broadcast(chats, text);
   // Someone who blocked the bot has left for good; drop them so every run doesn't fail on them.
   for (const chat of blocked.filter((c) => !owners.includes(c))) await removeSubscriber(Number(chat));
+  if (mode === 'summary') {
+    // The month's chart under the summary; without it the summary still counts as sent.
+    await buildChart('month', now)
+      .then(({ png, caption }) => broadcastPhoto(chats.filter((c) => !blocked.includes(c)), png, caption))
+      .catch((err) => console.error('chart:', err instanceof Error ? err.message : err));
+  }
 
   if (mode === 'update') state.lastSlot = slotKey(clock.date, slotFor(clock) ?? clock.hour);
   else state.summarySentOn = clock.date;

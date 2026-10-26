@@ -1,10 +1,11 @@
+import { buildChart, CHART_PERIODS, periodFor, type ChartPeriod } from './chart.js';
 import { esc, updateText } from './format.js';
 import { fetchJson } from './http.js';
 import { fetchMarket } from './market.js';
 import { takeSnapshot } from './snapshot.js';
 import type { State } from './state.js';
 import { addSubscriber, listSubscribers, MAX_SUBSCRIBERS, removeSubscriber } from './subscribers.js';
-import { configuredChats, sendMessage } from './telegram.js';
+import { configuredChats, sendMessage, sendPhoto } from './telegram.js';
 
 interface Message {
   text?: string;
@@ -22,15 +23,23 @@ export interface Update {
  */
 const STATE_URL = 'https://raw.githubusercontent.com/iliyan1st/gold-monitor/main/data/state.json';
 
-const HELP = '/gold — цените сега\n/stop — спирам съобщенията';
+const HELP =
+  '/gold — цените сега\n' +
+  `/chart — графика за месец (още /${CHART_PERIODS.week.command}, /${CHART_PERIODS.months6.command}, /${CHART_PERIODS.year.command})\n` +
+  '/stop — спирам съобщенията';
 const WELCOME =
   '✅ Готово! Ще получаваш цените на златото, среброто и платината в 10:00, 14:00 и 18:00 ' +
   `(пон–пет) и обобщение в 22:00 всеки ден.\n${HELP}`;
 
+const COMMAND = /^\/([a-z0-9_]+)(?:@\w+)?(?:\s+(.*))?$/is;
+
 /** "/gold", "/gold@GoldBulgariaMonitorBot", "/Gold сега" → "gold"; anything else → undefined. */
 export function command(text: string | undefined): string | undefined {
-  return text?.match(/^\/([a-z]+)(?:@\w+)?(?:\s|$)/i)?.[1].toLowerCase();
+  return text?.match(COMMAND)?.[1].toLowerCase();
 }
+
+/** "/chart 6м" → "6м" */
+export const commandArg = (text: string | undefined) => text?.match(COMMAND)?.[2]?.trim() ?? '';
 
 /** "Иван @ivan", or the group's title. */
 export function who(msg: Message): string {
@@ -84,11 +93,18 @@ async function gold(msg: Message): Promise<void> {
   await sendMessage(msg.chat.id, updateText(snap, market, state.last));
 }
 
+async function chart(msg: Message, period: ChartPeriod): Promise<void> {
+  const { png, caption } = await buildChart(period);
+  await sendPhoto(msg.chat.id, png, caption);
+}
+
 export async function handleUpdate(update: Update): Promise<void> {
   const msg = update.message;
   const cmd = command(msg?.text);
   if (!msg || !cmd) return;
-  if (cmd === 'start') await start(msg);
+  const period = periodFor(cmd, commandArg(msg.text));
+  if (period) await chart(msg, period);
+  else if (cmd === 'start') await start(msg);
   else if (cmd === 'stop') await stop(msg);
   else if (cmd === 'gold') await gold(msg);
   else if (cmd === 'id') await sendMessage(msg.chat.id, `Номер на този чат: <code>${msg.chat.id}</code>`);
