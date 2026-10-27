@@ -1,109 +1,110 @@
 {
  "lastSlot": "2026-10-26 22",
  "dayOpen": {
-  "at": "2026-10-26T20:38:31.407Z",
-  "date": "2026-10-26",
+  "at": "2026-10-27T20:36:47.583Z",
+  "date": "2026-10-27",
   "spot": {
-   "XAU": {
-    "mid": 3591.25,
-    "source": "tavex"
-   },
    "XAG": {
-    "mid": 48.235,
+    "mid": 48.925,
     "source": "tavex"
    },
    "XPT": {
-    "mid": 1370.49,
+    "mid": 1383.07,
+    "source": "tavex"
+   },
+   "XAU": {
+    "mid": 3648.15,
     "source": "tavex"
    }
   },
   "products": {
    "tavex-gold-1g-subscription": {
-    "sell": 132,
-    "buy": 119
+    "sell": 134,
+    "buy": 122
    },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
-    "buy": 1570
-   },
-   "tavex-silver-maple-1oz": {
-    "sell": 66.58,
-    "buy": 51.1
+    "buy": 1589
    },
    "tavex-gold-0.25g": {
     "sell": null,
-    "buy": 33
+    "buy": 34
+   },
+   "tavex-silver-maple-1oz": {
+    "sell": 67.52,
+    "buy": 51.8
    },
    "topgold-gold-0.5g-valcambi": {
-    "sell": 84,
-    "buy": 78
+    "sell": 86,
+    "buy": 80
    },
    "topgold-gold-1g-combibar": {
-    "sell": 121,
-    "buy": 121
+    "sell": 124,
+    "buy": 124
    },
    "topgold-silver-maple-1oz": {
-    "sell": 58.68,
-    "buy": 54.76
+    "sell": 60.68,
+    "buy": 56.72
    },
    "topgold-platinum-kangaroo-1oz": {
-    "sell": 1761,
-    "buy": 1761
+    "sell": 1785,
+    "buy": 1785
    }
   },
   "errors": []
  },
  "last": {
-  "at": "2026-10-26T20:38:31.407Z",
-  "date": "2026-10-26",
+  "at": "2026-10-27T20:36:47.583Z",
+  "date": "2026-10-27",
   "spot": {
-   "XAU": {
-    "mid": 3591.25,
-    "source": "tavex"
-   },
    "XAG": {
-    "mid": 48.235,
+    "mid": 48.925,
     "source": "tavex"
    },
    "XPT": {
-    "mid": 1370.49,
+    "mid": 1383.07,
+    "source": "tavex"
+   },
+   "XAU": {
+    "mid": 3648.15,
     "source": "tavex"
    }
   },
   "products": {
    "tavex-gold-1g-subscription": {
-    "sell": 132,
-    "buy": 119
+    "sell": 134,
+    "buy": 122
    },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
-    "buy": 1570
-   },
-   "tavex-silver-maple-1oz": {
-    "sell": 66.58,
-    "buy": 51.1
+    "buy": 1589
    },
    "tavex-gold-0.25g": {
     "sell": null,
-    "buy": 33
+    "buy": 34
+   },
+   "tavex-silver-maple-1oz": {
+    "sell": 67.52,
+    "buy": 51.8
    },
    "topgold-gold-0.5g-valcambi": {
-    "sell": 84,
-    "buy": 78
+    "sell": 86,
+    "buy": 80
    },
    "topgold-gold-1g-combibar": {
-    "sell": 121,
-    "buy": 121
+    "sell": 124,
+    "buy": 124
    },
    "topgold-silver-maple-1oz": {
-    "sell": 58.68,
-    "buy": 54.76
+    "sell": 60.68,
+    "buy": 56.72
    },
    "topgold-platinum-kangaroo-1oz": {
-    "sell": 1761,
-    "buy": 1761
+    "sell": 1785,
+    "buy": 1785
    }
   },
   "errors": []
- }
+ },
+ "summarySentOn": "2026-10-27"
 }
