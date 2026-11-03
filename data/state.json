@@ -54,19 +54,19 @@
   "errors": []
  },
  "last": {
-  "at": "2026-11-03T16:07:07.829Z",
+  "at": "2026-11-03T21:42:57.591Z",
   "date": "2026-11-03",
   "spot": {
    "XAU": {
-    "mid": 3514.55,
+    "mid": 3510.45,
     "source": "tavex"
    },
    "XAG": {
-    "mid": 44.505,
+    "mid": 44.495,
     "source": "tavex"
    },
    "XPT": {
-    "mid": 1280.95,
+    "mid": 1267.97,
     "source": "tavex"
    }
   },
@@ -77,15 +77,15 @@
    },
    "tavex-gold-0.25g": {
     "sell": null,
-    "buy": 33
+    "buy": 32
    },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
-    "buy": 1474
+    "buy": 1457
    },
    "tavex-silver-maple-1oz": {
-    "sell": 61.54,
-    "buy": 47.21
+    "sell": 61.43,
+    "buy": 47.16
    },
    "topgold-gold-0.5g-valcambi": {
     "sell": 83,
@@ -96,15 +96,15 @@
     "buy": 120
    },
    "topgold-silver-maple-1oz": {
-    "sell": 56.24,
-    "buy": 52.64
+    "sell": 56.16,
+    "buy": 52.56
    },
    "topgold-platinum-kangaroo-1oz": {
-    "sell": 1771,
-    "buy": 1643
+    "sell": 1751,
+    "buy": 1625
    }
   },
   "errors": []
  },
- "summarySentOn": "2026-11-01"
+ "summarySentOn": "2026-11-03"
 }
