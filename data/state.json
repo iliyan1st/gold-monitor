@@ -1,19 +1,19 @@
 {
  "lastSlot": "2026-11-05 18",
  "dayOpen": {
-  "at": "2026-11-06T21:26:59.259Z",
-  "date": "2026-11-06",
+  "at": "2026-11-07T20:09:18.263Z",
+  "date": "2026-11-07",
   "spot": {
-   "XAG": {
-    "mid": 46.635,
-    "source": "tavex"
-   },
    "XAU": {
     "mid": 3649.55,
     "source": "tavex"
    },
+   "XAG": {
+    "mid": 46.635,
+    "source": "tavex"
+   },
    "XPT": {
-    "mid": 1374.59,
+    "mid": 1375.87,
     "source": "tavex"
    }
   },
@@ -27,12 +27,12 @@
     "buy": 34
    },
    "tavex-silver-maple-1oz": {
-    "sell": 64.36,
-    "buy": 49.41
+    "sell": 64.34,
+    "buy": 49.34
    },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
-    "buy": 1581
+    "buy": 1582
    },
    "topgold-gold-0.5g-valcambi": {
     "sell": 87,
@@ -43,30 +43,30 @@
     "buy": 125
    },
    "topgold-silver-maple-1oz": {
-    "sell": 59,
-    "buy": 55.04
+    "sell": 59.08,
+    "buy": 55.12
    },
    "topgold-platinum-kangaroo-1oz": {
-    "sell": 1899,
-    "buy": 1755
+    "sell": 1906,
+    "buy": 1762
    }
   },
   "errors": []
  },
  "last": {
-  "at": "2026-11-06T21:26:59.259Z",
-  "date": "2026-11-06",
+  "at": "2026-11-07T20:09:18.263Z",
+  "date": "2026-11-07",
   "spot": {
-   "XAG": {
-    "mid": 46.635,
-    "source": "tavex"
-   },
    "XAU": {
     "mid": 3649.55,
     "source": "tavex"
    },
+   "XAG": {
+    "mid": 46.635,
+    "source": "tavex"
+   },
    "XPT": {
-    "mid": 1374.59,
+    "mid": 1375.87,
     "source": "tavex"
    }
   },
@@ -80,12 +80,12 @@
     "buy": 34
    },
    "tavex-silver-maple-1oz": {
-    "sell": 64.36,
-    "buy": 49.41
+    "sell": 64.34,
+    "buy": 49.34
    },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
-    "buy": 1581
+    "buy": 1582
    },
    "topgold-gold-0.5g-valcambi": {
     "sell": 87,
@@ -96,15 +96,15 @@
     "buy": 125
    },
    "topgold-silver-maple-1oz": {
-    "sell": 59,
-    "buy": 55.04
+    "sell": 59.08,
+    "buy": 55.12
    },
    "topgold-platinum-kangaroo-1oz": {
-    "sell": 1899,
-    "buy": 1755
+    "sell": 1906,
+    "buy": 1762
    }
   },
   "errors": []
  },
- "summarySentOn": "2026-11-06"
+ "summarySentOn": "2026-11-07"
 }
