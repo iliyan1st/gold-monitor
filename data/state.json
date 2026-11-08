@@ -1,8 +1,8 @@
 {
  "lastSlot": "2026-11-05 18",
  "dayOpen": {
-  "at": "2026-11-07T20:09:18.263Z",
-  "date": "2026-11-07",
+  "at": "2026-11-08T20:23:32.176Z",
+  "date": "2026-11-08",
   "spot": {
    "XAU": {
     "mid": 3649.55,
@@ -28,7 +28,7 @@
    },
    "tavex-silver-maple-1oz": {
     "sell": 64.34,
-    "buy": 49.34
+    "buy": 49.33
    },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
@@ -43,8 +43,8 @@
     "buy": 125
    },
    "topgold-silver-maple-1oz": {
-    "sell": 59.08,
-    "buy": 55.12
+    "sell": 59,
+    "buy": 55
    },
    "topgold-platinum-kangaroo-1oz": {
     "sell": 1906,
@@ -54,8 +54,8 @@
   "errors": []
  },
  "last": {
-  "at": "2026-11-07T20:09:18.263Z",
-  "date": "2026-11-07",
+  "at": "2026-11-08T20:23:32.176Z",
+  "date": "2026-11-08",
   "spot": {
    "XAU": {
     "mid": 3649.55,
@@ -81,7 +81,7 @@
    },
    "tavex-silver-maple-1oz": {
     "sell": 64.34,
-    "buy": 49.34
+    "buy": 49.33
    },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
@@ -96,8 +96,8 @@
     "buy": 125
    },
    "topgold-silver-maple-1oz": {
-    "sell": 59.08,
-    "buy": 55.12
+    "sell": 59,
+    "buy": 55
    },
    "topgold-platinum-kangaroo-1oz": {
     "sell": 1906,
@@ -106,5 +106,5 @@
   },
   "errors": []
  },
- "summarySentOn": "2026-11-07"
+ "summarySentOn": "2026-11-08"
 }
