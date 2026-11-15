@@ -1,19 +1,19 @@
 {
  "lastSlot": "2026-11-13 18",
  "dayOpen": {
-  "at": "2026-11-14T20:37:37.434Z",
-  "date": "2026-11-14",
+  "at": "2026-11-15T20:58:45.988Z",
+  "date": "2026-11-15",
   "spot": {
+   "XAU": {
+    "mid": 3518.55,
+    "source": "tavex"
+   },
    "XAG": {
     "mid": 44.345,
     "source": "tavex"
    },
    "XPT": {
     "mid": 1350.27,
-    "source": "tavex"
-   },
-   "XAU": {
-    "mid": 3518.55,
     "source": "tavex"
    }
   },
@@ -26,13 +26,9 @@
     "sell": null,
     "buy": 33
    },
-   "tavex-silver-maple-1oz": {
-    "sell": 61.04,
-    "buy": 46.85
-   },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
-    "buy": 1558
+    "buy": 1557
    },
    "topgold-gold-0.5g-valcambi": {
     "sell": 82,
@@ -44,29 +40,33 @@
    },
    "topgold-silver-maple-1oz": {
     "sell": 56,
-    "buy": 52.88
+    "buy": 52.92
    },
    "topgold-platinum-kangaroo-1oz": {
     "sell": 1859,
     "buy": 1752
+   },
+   "tavex-silver-maple-1oz": {
+    "sell": 61.02,
+    "buy": 46.82
    }
   },
   "errors": []
  },
  "last": {
-  "at": "2026-11-14T20:37:37.434Z",
-  "date": "2026-11-14",
+  "at": "2026-11-15T20:58:45.988Z",
+  "date": "2026-11-15",
   "spot": {
+   "XAU": {
+    "mid": 3518.55,
+    "source": "tavex"
+   },
    "XAG": {
     "mid": 44.345,
     "source": "tavex"
    },
    "XPT": {
     "mid": 1350.27,
-    "source": "tavex"
-   },
-   "XAU": {
-    "mid": 3518.55,
     "source": "tavex"
    }
   },
@@ -79,13 +79,9 @@
     "sell": null,
     "buy": 33
    },
-   "tavex-silver-maple-1oz": {
-    "sell": 61.04,
-    "buy": 46.85
-   },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
-    "buy": 1558
+    "buy": 1557
    },
    "topgold-gold-0.5g-valcambi": {
     "sell": 82,
@@ -97,14 +93,18 @@
    },
    "topgold-silver-maple-1oz": {
     "sell": 56,
-    "buy": 52.88
+    "buy": 52.92
    },
    "topgold-platinum-kangaroo-1oz": {
     "sell": 1859,
     "buy": 1752
+   },
+   "tavex-silver-maple-1oz": {
+    "sell": 61.02,
+    "buy": 46.82
    }
   },
   "errors": []
  },
- "summarySentOn": "2026-11-14"
+ "summarySentOn": "2026-11-15"
 }
