@@ -1,38 +1,38 @@
 {
- "lastSlot": "2026-11-18 18",
+ "lastSlot": "2026-11-19 18",
  "dayOpen": {
-  "at": "2026-11-18T17:10:17.793Z",
-  "date": "2026-11-18",
+  "at": "2026-11-19T17:17:25.420Z",
+  "date": "2026-11-19",
   "spot": {
-   "XAG": {
-    "mid": 41.015,
+   "XAU": {
+    "mid": 3348.45,
     "source": "tavex"
    },
-   "XAU": {
-    "mid": 3411.75,
+   "XAG": {
+    "mid": 40.315,
     "source": "tavex"
    },
    "XPT": {
-    "mid": 1240.36,
+    "mid": 1226.6,
     "source": "tavex"
    }
   },
   "products": {
+   "tavex-silver-maple-1oz": {
+    "sell": 55.48,
+    "buy": 42.58
+   },
    "tavex-gold-1g-subscription": {
-    "sell": 125,
-    "buy": 114
+    "sell": 123,
+    "buy": 111
    },
    "tavex-gold-0.25g": {
-    "sell": 33,
+    "sell": 32,
     "buy": 32
-   },
-   "tavex-silver-maple-1oz": {
-    "sell": 56.75,
-    "buy": 43.55
    },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
-    "buy": 1435
+    "buy": 1421
    },
    "topgold-gold-0.5g-valcambi": {
     "sell": 82,
@@ -54,38 +54,38 @@
   "errors": []
  },
  "last": {
-  "at": "2026-11-18T17:10:17.793Z",
-  "date": "2026-11-18",
+  "at": "2026-11-19T17:17:25.420Z",
+  "date": "2026-11-19",
   "spot": {
-   "XAG": {
-    "mid": 41.015,
+   "XAU": {
+    "mid": 3348.45,
     "source": "tavex"
    },
-   "XAU": {
-    "mid": 3411.75,
+   "XAG": {
+    "mid": 40.315,
     "source": "tavex"
    },
    "XPT": {
-    "mid": 1240.36,
+    "mid": 1226.6,
     "source": "tavex"
    }
   },
   "products": {
+   "tavex-silver-maple-1oz": {
+    "sell": 55.48,
+    "buy": 42.58
+   },
    "tavex-gold-1g-subscription": {
-    "sell": 125,
-    "buy": 114
+    "sell": 123,
+    "buy": 111
    },
    "tavex-gold-0.25g": {
-    "sell": 33,
+    "sell": 32,
     "buy": 32
-   },
-   "tavex-silver-maple-1oz": {
-    "sell": 56.75,
-    "buy": 43.55
    },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
-    "buy": 1435
+    "buy": 1421
    },
    "topgold-gold-0.5g-valcambi": {
     "sell": 82,
