@@ -1,38 +1,38 @@
 {
- "lastSlot": "2026-11-19 18",
+ "lastSlot": "2026-11-20 18",
  "dayOpen": {
-  "at": "2026-11-19T17:17:25.420Z",
-  "date": "2026-11-19",
+  "at": "2026-11-20T16:54:48.141Z",
+  "date": "2026-11-20",
   "spot": {
    "XAU": {
-    "mid": 3348.45,
-    "source": "tavex"
-   },
-   "XAG": {
-    "mid": 40.315,
+    "mid": 3222.5,
     "source": "tavex"
    },
    "XPT": {
-    "mid": 1226.6,
+    "mid": 1197.02,
+    "source": "tavex"
+   },
+   "XAG": {
+    "mid": 37.555,
     "source": "tavex"
    }
   },
   "products": {
-   "tavex-silver-maple-1oz": {
-    "sell": 55.48,
-    "buy": 42.58
-   },
    "tavex-gold-1g-subscription": {
-    "sell": 123,
-    "buy": 111
+    "sell": 118,
+    "buy": 107
+   },
+   "tavex-silver-maple-1oz": {
+    "sell": 51.92,
+    "buy": 39.84
    },
    "tavex-gold-0.25g": {
-    "sell": 32,
-    "buy": 32
+    "sell": 31,
+    "buy": 31
    },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
-    "buy": 1421
+    "buy": 1372
    },
    "topgold-gold-0.5g-valcambi": {
     "sell": 82,
@@ -54,38 +54,38 @@
   "errors": []
  },
  "last": {
-  "at": "2026-11-19T17:17:25.420Z",
-  "date": "2026-11-19",
+  "at": "2026-11-20T16:54:48.141Z",
+  "date": "2026-11-20",
   "spot": {
    "XAU": {
-    "mid": 3348.45,
-    "source": "tavex"
-   },
-   "XAG": {
-    "mid": 40.315,
+    "mid": 3222.5,
     "source": "tavex"
    },
    "XPT": {
-    "mid": 1226.6,
+    "mid": 1197.02,
+    "source": "tavex"
+   },
+   "XAG": {
+    "mid": 37.555,
     "source": "tavex"
    }
   },
   "products": {
-   "tavex-silver-maple-1oz": {
-    "sell": 55.48,
-    "buy": 42.58
-   },
    "tavex-gold-1g-subscription": {
-    "sell": 123,
-    "buy": 111
+    "sell": 118,
+    "buy": 107
+   },
+   "tavex-silver-maple-1oz": {
+    "sell": 51.92,
+    "buy": 39.84
    },
    "tavex-gold-0.25g": {
-    "sell": 32,
-    "buy": 32
+    "sell": 31,
+    "buy": 31
    },
    "tavex-platinum-kangaroo-1oz": {
     "sell": null,
-    "buy": 1421
+    "buy": 1372
    },
    "topgold-gold-0.5g-valcambi": {
     "sell": 82,
